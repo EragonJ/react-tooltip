@@ -29,6 +29,9 @@ class ReactTooltip extends React.Component {
   componentDidMount() {
     this._updatePosition();
     this.bindListener();
+    window.addEventListener('rebind-tooltip', () => {
+      this.rebuildListener();
+    });
   }
 
   componentWillUnmount() {
@@ -60,6 +63,11 @@ class ReactTooltip extends React.Component {
       targetArray[i].removeEventListener("mousemove", this.updateTooltip);
       targetArray[i].removeEventListener("mouseleave", this.hideTooltip);
     }
+  }
+
+  rebuildListener() {
+    this.unbindListener();
+    this.bindListener();
   }
 
   _updatePosition(){

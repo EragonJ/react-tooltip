@@ -62,8 +62,13 @@ var ReactTooltip = (function (_React$Component) {
   _createClass(ReactTooltip, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var _this2 = this;
+
       this._updatePosition();
       this.bindListener();
+      window.addEventListener('rebind-tooltip', function () {
+        _this2.rebuildListener();
+      });
     }
   }, {
     key: 'componentWillUnmount',
@@ -100,6 +105,12 @@ var ReactTooltip = (function (_React$Component) {
         targetArray[i].removeEventListener("mousemove", this.updateTooltip);
         targetArray[i].removeEventListener("mouseleave", this.hideTooltip);
       }
+    }
+  }, {
+    key: 'rebuildListener',
+    value: function rebuildListener() {
+      this.unbindListener();
+      this.bindListener();
     }
   }, {
     key: '_updatePosition',
